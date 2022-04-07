@@ -131,20 +131,30 @@ export default class JimmyPoll {
         if(i == response)
         {
           poll.choices[i].userIds.add(user.id);
-          t++;
         }
         else
         {
           poll.choices[i].userIds.delete(user.id);
-          t++;
         }
       }
-      if(t == this.userJoined.length)
-      {
+        //UI.updateResults(this, poll, this.choices);
+        const resultButton = MRE.Actor.CreateFromLibrary(this.context, {
+        resourceId: 'artifact:1579239194507608147',
+        actor: {
+          name: 'Result Button',
+          transform: {
+            local: {
+              position: { x: 1, y: .6, z: 0 }
+            }
+          },
+          collider: { geometry: { shape: MRE.ColliderType.Box, size: { x: 0.5, y: 0.5, z: 0.5 } } }
+        }
+       });
+       resultButton.setBehavior(MRE.ButtonBehavior).onClick(user => {
         UI.updateResults(this, poll, this.choices);
-      }
+       });
     }
-  }
+}
 
   // could be from an Event or a World
   private pollIdFor(user: MRE.User) : string{
