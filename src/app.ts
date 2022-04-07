@@ -147,7 +147,8 @@ export default class JimmyPoll {
               position: { x: 1, y: .6, z: 0 }
             }
           },
-          collider: { geometry: { shape: MRE.ColliderType.Box, size: { x: 0.5, y: 0.5, z: 0.5 } } }
+          collider: { geometry: { shape: MRE.ColliderType.Box, size: { x: 0.5, y: 0.5, z: 0.5 } } },
+          exclusiveToUser: user.id
         }
        });
        resultButton.setBehavior(MRE.ButtonBehavior).onClick(user => {
