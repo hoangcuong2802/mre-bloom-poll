@@ -39,6 +39,8 @@ export default class JimmyPoll {
   private header: MRE.Actor;
   private helpButton: MRE.Actor;
   private choices: MRE.Actor;
+  private userId: MRE.Guid;
+  private userIds: Set<MRE.Guid>;
 
   private favoriteButtons = new Map<MRE.Guid, MRE.Actor>();
   private pollButtons = new Map<MRE.Guid, MRE.Actor>();
@@ -60,6 +62,10 @@ export default class JimmyPoll {
     this.helpButton = UI.createHelpButton(this);
     UI.updateHeader(this.header, 'Title', 'We Are Bloom Poll');
     Audio.preload(this.assets);
+		
+    this.context.onUserJoined(async (user: MRE.User) => {
+    this.userId = user.id;
+    })
 	}
 
   private startPoll(pollId: string, input: string){
@@ -148,7 +154,7 @@ export default class JimmyPoll {
             }
           },
           collider: { geometry: { shape: MRE.ColliderType.Box, size: { x: 0.5, y: 0.5, z: 0.5 } } },
-          exclusiveToUser: user.id
+          exclusiveToUser: this.userId
         }
        });
        resultButton.setBehavior(MRE.ButtonBehavior).onClick(user => {
